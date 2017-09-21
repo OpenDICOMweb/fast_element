@@ -1,0 +1,31 @@
+name: fast_element
+description: A starting point for Dart libraries or applications.
+version: 0.0.1
+#homepage: https://www.example.com
+#author: jjfp <email@example.com>
+
+environment:
+  sdk: '>=1.20.1 <2.0.0'
+
+dependencies:
+  date_time:
+    path: C:/odw/sdk/date_time
+    version: ^0.6.3
+  number:
+    path: C:/odw/sdk/number
+    version: ^0.6.3
+  string:
+    path: C:/odw/sdk/string
+    version: ^0.6.3
+  system:
+    path: C:/odw/sdk/system
+    version: ^0.6.3
+  uid:
+    path: C:/odw/sdk/uid
+    version: ^0.6.3
+  core:
+    path: C:/odw/sdk/core
+    version: ^0.6.3
+
+dev_dependencies:
+  test: ^0.12.0

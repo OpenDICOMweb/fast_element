@@ -15,8 +15,8 @@ class EType {
 
 	const EType(this.index, this.condition);
 
-	static bool requiredWithValues<K>(Dataset ds, K key, [Predicate p]) => ds
-			.isPresentWithValues(key);
+	static bool requiredWithValues<K>(Dataset ds, K key, [Predicate p]) =>
+      ds.isPresentWithValues(key);
 	static bool requiredWithValuesIf<K>(Dataset ds, K key, [Predicate p]) =>
 			ds.isPresentWithValuesif(key, p);
 

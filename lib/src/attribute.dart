@@ -4,10 +4,7 @@
 // Author: Jim Philbin <jfphilbin@gmail.edu> -
 // See the AUTHORS file for other contributors.
 
-import 'dart:typed_data';
-
-import 'package:system/system.dart';
-import 'package:tag/tag.dart';
+import 'package:core/core.dart';
 
 import 'package:fast_element/src/keywords.dart';
 import 'package:fast_element/src/names.dart';
@@ -39,7 +36,7 @@ String toDcm(int group, int elt) =>
 const kVMLenthN = 255;
 
 class Attribute<V> {
-  final ByteData bd;
+  final Bytes bd;
 
   const Attribute(this.bd);
 
@@ -53,7 +50,7 @@ class Attribute<V> {
   String get name => getAttributeName(index);
 
   int get vrIndex => bd.getUint8(kVROffset);
-  VR get vr => VR.vrList[vrIndex];
+  VR get vr => vrByIndex[vrIndex];
 
   int get vmMin => bd.getUint8(kVMMinOffset) * vmWidth;
   int get vmMax => bd.getUint8(kVMMaxOffset) * vmWidth;
@@ -94,13 +91,14 @@ class Attribute<V> {
 
   bool isValidValues(List<V> values) {
     if (isNotValidLength(values)) return false;
-    for (V value in values) if (vr.isNotValid(value)) return false;
+    for (V value in values) if (vr.isValidValue(value)) return false;
     return true;
   }
 
   String get info => '$this min($vmMin) max($vmMax) width($vmWidth) Retired($isRetired)'
       ' Public($isPublic) Type($mode)';
 
+  @override
   String toString() => '$runtimeType$dcm "$keyword" $vr "$name" ';
 
   static final Attribute kE0 = new Attribute(e0bd);
@@ -151,10 +149,10 @@ const List<List<int>> eTypeList = const <List<int>>[
   const <int>[4, 1, -1, 3, 0, 1, 0, 3] // VM.k3n
 ];
 
-final ByteData e0bd = new Uint8List.fromList(eTypeList[0]).buffer.asByteData();
-final ByteData e1bd = new Uint8List.fromList(eTypeList[1]).buffer.asByteData();
-final ByteData e2bd = new Uint8List.fromList(eTypeList[2]).buffer.asByteData();
-final ByteData e3bd = new Uint8List.fromList(eTypeList[3]).buffer.asByteData();
+final Bytes e0bd = new Bytes.fromList(eTypeList[0]);
+final Bytes e1bd = new Bytes.fromList(eTypeList[1]);
+final Bytes e2bd = new Bytes.fromList(eTypeList[2]);
+final Bytes e3bd = new Bytes.fromList(eTypeList[3]);
 
 //TODO: replace with real issues
 class Issues {

@@ -27,7 +27,7 @@ abstract class LookupTable<T> {
 
   int compare(T a, T b);
 
-  int lookup(T value, Comparator compare) {
+  int lookup(T value, Comparator<T> compare) {
     print('  lookup 1 v: $value');
     int i = binarySearch(table1, value, compare: compare);
     if (i != -1) {

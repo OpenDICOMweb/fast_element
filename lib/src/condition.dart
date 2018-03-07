@@ -4,7 +4,7 @@
 // Author: Jim Philbin <jfphilbin@gmail.edu> - 
 // See the AUTHORS file for other contributors.
 
-import 'package:core/dataset.dart';
+import 'package:core/core.dart';
 
 typedef bool Predicate(Dataset ds, e);
 typedef bool Condition<K>(Dataset ds, K key, [Predicate p]);
@@ -15,8 +15,9 @@ class EType {
 
 	const EType(this.index, this.condition);
 
-	static bool requiredWithValues<K>(Dataset ds, K key, [Predicate p]) =>
-      ds.isPresentWithValues(key);
+	static bool requiredWithValues(Dataset ds, int index, [Predicate p]) =>
+      ds.lookup(index, required: true);
+
 	static bool requiredWithValuesIf<K>(Dataset ds, K key, [Predicate p]) =>
 			ds.isPresentWithValuesif(key, p);
 
@@ -30,4 +31,5 @@ static const k1c = const EType(1, requiredWithValuesIf);
 static const k2 = const EType(2, required);
 static const k2c = const EType(3, requiredWithValues);
 static const k3 = const EType(4, optional);
+
 }
